@@ -1,0 +1,218 @@
+/* ═══════════════════════════════════════════════════════════════
+   HERO.MODULE.CSS — Awwwards-Level
+   ═══════════════════════════════════════════════════════════════ */
+
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100svh;
+  min-height: 700px;
+  overflow: hidden;
+  background: #050505;
+}
+
+/* ── Background photo ───────────────────────────────────────── */
+.bgWrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.bg {
+  width: 100%;
+  height: 100%;
+  background: #080808 url("/assets/user_photo.jpg") center 4% / cover no-repeat;
+  filter: grayscale(100%) brightness(0.55) contrast(1.1) sepia(5%) hue-rotate(-15deg);
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+/* ── Gradient layers ────────────────────────────────────────── */
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(105deg, rgba(5,5,5,0.88) 0%, transparent 50%),
+    linear-gradient(to left,  rgba(5,5,5,0.82) 0%, transparent 50%),
+    linear-gradient(to top,   rgba(5,5,5,0.92) 0%, transparent 40%),
+    linear-gradient(to bottom,rgba(5,5,5,0.30) 0%, transparent 30%);
+}
+
+/* ── Overflow clip for GSAP reveal ─────────────────────────── */
+.overflow {
+  overflow: hidden;
+  display: block;
+  line-height: 0.88;
+}
+
+/* ── Name: bottom-left ──────────────────────────────────────── */
+.nameLeft {
+  position: absolute;
+  left: 5.5vw;
+  bottom: 11vh;
+  z-index: 3;
+}
+
+.nameText {
+  font-size: clamp(4.5rem, 11.5vw, 13rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.88;
+  color: #f2ede5;
+  text-transform: uppercase;
+  will-change: transform, opacity;
+  display: block;
+  font-family: var(--font-bricolage), sans-serif;
+}
+
+.nameItalic {
+  font-style: italic;
+  font-weight: 300;
+  letter-spacing: -0.025em;
+}
+
+/* ── Name: top-right ────────────────────────────────────────── */
+.nameRight {
+  position: absolute;
+  right: 5.5vw;
+  top: 11vh;
+  z-index: 3;
+  text-align: right;
+}
+
+/* ── Center role ─────────────────────────────────────────────  */
+.roleWrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 3;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  will-change: opacity, transform;
+  white-space: nowrap;
+}
+
+.roleTop {
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: rgba(242, 237, 229, 0.38);
+}
+
+.role {
+  font-size: clamp(0.6rem, 0.9vw, 0.82rem);
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(242, 237, 229, 0.65);
+}
+
+/* ── Scroll indicator ────────────────────────────────────────── */
+.scrollIndicator {
+  position: absolute;
+  bottom: 2.8rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.55rem;
+  will-change: opacity;
+}
+
+.scrollLabel {
+  font-size: 0.58rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(242, 237, 229, 0.35);
+}
+
+.scrollArrow {
+  color: rgba(242, 237, 229, 0.4);
+  will-change: transform;
+}
+
+/* ── Bottom-left fact ticker ─────────────────────────────────── */
+.facts {
+  position: absolute;
+  bottom: 2.8rem;
+  left: 5.5vw;
+  z-index: 3;
+  overflow: hidden;
+}
+
+.factText {
+  font-size: 0.62rem;
+  font-weight: 400;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(242, 237, 229, 0.35);
+  display: block;
+  will-change: opacity, transform;
+}
+
+/* ── Bottom-right live clock ─────────────────────────────────── */
+.clock {
+  position: absolute;
+  bottom: 2.6rem;
+  right: 5.5vw;
+  z-index: 3;
+  display: flex;
+  align-items: baseline;
+  gap: 0.1rem;
+  will-change: opacity;
+}
+
+.clockTime {
+  font-size: 0.95rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: rgba(242, 237, 229, 0.45);
+  font-variant-numeric: tabular-nums;
+}
+
+.clockSep {
+  font-size: 0.95rem;
+  color: rgba(242, 237, 229, 0.25);
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ── Thin top rule ───────────────────────────────────────────── */
+.topRule {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: rgba(242, 237, 229, 0.06);
+  z-index: 3;
+}
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .nameText { font-size: clamp(3.2rem, 16vw, 7rem); }
+  .nameLeft  { bottom: 16vh; left: 6vw; }
+  .nameRight { top: 16vh;   right: 6vw; }
+  .role      { letter-spacing: 0.14em; }
+  .roleTop   { display: none; }
+}
+
+@media (max-width: 600px) {
+  .nameText { font-size: clamp(2.8rem, 18vw, 5.5rem); }
+  .facts    { display: none; }
+  .clock    { right: 6vw; }
+  .scrollIndicator { bottom: 2rem; }
+  .bg { background-position: center 20%; }
+}

@@ -1,0 +1,149 @@
+/* ═══════════════════════════════════════════════════════════════
+   SKILLS.MODULE.CSS — Awwwards-Level
+   ═══════════════════════════════════════════════════════════════ */
+
+.skills {
+  background: #eae7e1;
+  color: #0c0c0c;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 10;
+  border-top: 1px solid rgba(12, 12, 12, 0.1);
+}
+
+.inner {
+  padding: 7rem 5.5vw 8rem;
+  width: 100%;
+}
+
+/* ── Accent line ─────────────────────────────────────────────── */
+.lineAccent {
+  width: 2.5rem;
+  height: 2px;
+  background: #0c0c0c;
+  transform-origin: left;
+  margin-bottom: 3.5rem;
+  will-change: transform;
+}
+
+/* ── Giant title ─────────────────────────────────────────────── */
+.titleWrap {
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: clamp(2.5rem, 7.5vw, 8rem);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 0.88;
+  color: #0c0c0c;
+  text-transform: uppercase;
+  display: block;
+  will-change: transform;
+  font-family: var(--font-bricolage), sans-serif;
+}
+
+.title span {
+  will-change: transform, opacity;
+}
+
+/* ── Subtitle ────────────────────────────────────────────────── */
+.subtitle {
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(12, 12, 12, 0.38);
+  font-weight: 500;
+  margin-top: 1.5rem;
+  margin-bottom: 5.5rem;
+}
+
+/* ── Grid ────────────────────────────────────────────────────── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 1px solid rgba(12, 12, 12, 0.1);
+}
+
+.col {
+  padding: 3rem 0;
+  padding-right: 2rem;
+  border-right: 1px solid rgba(12, 12, 12, 0.08);
+  padding-left: 2rem;
+}
+
+.col:first-child {
+  padding-left: 0;
+}
+
+.col:last-child {
+  border-right: none;
+  padding-right: 0;
+}
+
+/* ── Category head ───────────────────────────────────────────── */
+.colHead {
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(12, 12, 12, 0.35);
+  margin-bottom: 2rem;
+}
+
+/* ── Skill list ──────────────────────────────────────────────── */
+.list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+}
+
+.item {
+  font-size: clamp(0.9rem, 1.05vw, 1.05rem);
+  font-weight: 400;
+  color: #0c0c0c;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  cursor: default;
+}
+
+.item:hover {
+  opacity: 0.4;
+  transform: translateX(4px);
+}
+
+.dash {
+  color: rgba(12, 12, 12, 0.2);
+  font-weight: 300;
+  flex-shrink: 0;
+}
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .col:nth-child(2) { border-right: none; }
+  .col:nth-child(3) { border-right: 1px solid rgba(12,12,12,0.08); padding-left: 0; }
+  .col:nth-child(4) { border-right: none; }
+  .col:nth-child(3),
+  .col:nth-child(4) {
+    border-top: 1px solid rgba(12,12,12,0.08);
+  }
+}
+
+@media (max-width: 640px) {
+  .grid { grid-template-columns: 1fr; }
+  .col  { border-right: none !important; border-left: none !important; border-top: 1px solid rgba(12,12,12,0.08); padding: 2.5rem 0; }
+  .col:first-child { border-top: none; }
+  .title { font-size: clamp(2.2rem, 13vw, 5rem); }
+  .inner { padding: 5rem 6vw; }
+  .subtitle { margin-bottom: 3rem; }
+}
