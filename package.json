@@ -12,6 +12,8 @@
     "@prisma/client": "^7.8.0",
     "@react-three/drei": "^10.7.7",
     "@react-three/fiber": "^9.6.0",
+    "@supabase/ssr": "^0.10.2",
+    "@supabase/supabase-js": "^2.105.1",
     "bcryptjs": "^3.0.3",
     "deep-is": "^0.1.4",
     "fast-deep-equal": "^3.1.3",

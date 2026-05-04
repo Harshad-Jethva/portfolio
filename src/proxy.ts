@@ -1,10 +1,14 @@
-import { NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 import { jwtVerify } from "jose";
+import { createClient } from "@/utils/supabase/middleware";
 
 const secretKey = process.env.JWT_SECRET;
 const key = new TextEncoder().encode(secretKey);
 
-export async function middleware(request) {
+export async function proxy(request: NextRequest) {
+  // Update Supabase session
+  let response = await createClient(request);
+
   const { pathname } = request.nextUrl;
 
   // Protect admin routes
@@ -19,7 +23,7 @@ export async function middleware(request) {
       await jwtVerify(session, key, {
         algorithms: ["HS256"],
       });
-      return NextResponse.next();
+      return response;
     } catch (error) {
       console.error("JWT verification failed:", error);
       return NextResponse.redirect(new URL("/login", request.url));
@@ -41,8 +45,9 @@ export async function middleware(request) {
     }
   }
 
-  return NextResponse.next();
+  return response;
 }
+
 
 export const config = {
   matcher: ["/admin/:path*", "/login"],
