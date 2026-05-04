@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import styles from "./Hero.module.css";
+import HeroImageReveal from "./HeroImageReveal";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -70,7 +71,7 @@ export default function Hero({ isLoaded }) {
     const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
 
     tl.fromTo(bgRef.current,
-      { scale: 1.12, opacity: 0 },
+      { scale: 1.04, opacity: 0 },
       { scale: 1, opacity: 1, duration: 1.8 }
     )
       .fromTo([name1Ref.current, name2Ref.current],
@@ -111,7 +112,7 @@ export default function Hero({ isLoaded }) {
         end: "bottom top",
         scrub: true,
       },
-      scale: 1.15,
+      scale: 1.06,
       ease: "none",
     });
   }, [isLoaded]);
@@ -119,8 +120,13 @@ export default function Hero({ isLoaded }) {
   return (
     <section className={styles.hero} ref={containerRef} id="hero">
       {/* Full-bleed background photo */}
-      <div className={styles.bgWrap}>
-        <div ref={bgRef} className={styles.bg} />
+      <div ref={bgRef} className={styles.bgWrap}>
+        <HeroImageReveal
+          className={styles.bgCanvas}
+          mainImage="/assets/hero-photo-main.png"
+          secondImage="/assets/hero-photo-second.png"
+          interactionRef={containerRef}
+        />
       </div>
 
       {/* Dark gradient overlay */}
