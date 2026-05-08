@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useMemo, useState } from "react";
 import { DEFAULT_ACHIEVEMENTS } from "@/lib/portfolioData";
@@ -54,6 +54,10 @@ export default function Achievements() {
                 style={{ "--i": index }}
                 alt={achievement.title}
                 loading="lazy"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = "https://images.unsplash.com/photo-1635350736475-c8cef4b21906?w=400"; // Premium abstract placeholder
+                }}
               />
             ))}
           </div>
@@ -62,14 +66,27 @@ export default function Achievements() {
         <div className={styles.details}>
           {achievements.map((achievement, index) => (
             <article key={achievement.id ?? `${achievement.title}-detail-${index}`} className={styles.detailCard}>
-              <div className={styles.metaRow}>
-                <span>{achievement.year}</span>
-                <span>{achievement.category}</span>
+              <div className={styles.detailImageWrapper}>
+                <img 
+                  src={achievement.imageUrl} 
+                  alt={achievement.title} 
+                  className={styles.detailImage}
+                  onError={(e) => {
+                    e.target.onerror = null;
+                    e.target.src = "https://images.unsplash.com/photo-1635350736475-c8cef4b21906?w=400";
+                  }}
+                />
               </div>
-              <h3 className={styles.detailTitle}>{achievement.title}</h3>
-              <p className={styles.organizer}>{achievement.organizer}</p>
-              <p className={styles.detailText}>{achievement.details}</p>
-              <p className={styles.location}>{achievement.location}</p>
+              <div className={styles.detailContent}>
+                <div className={styles.metaRow}>
+                  <span>{achievement.year}</span>
+                  <span className={styles.categoryBadge}>{achievement.category}</span>
+                </div>
+                <h3 className={styles.detailTitle}>{achievement.title}</h3>
+                <p className={styles.organizer}>{achievement.organizer}</p>
+                <p className={styles.detailText}>{achievement.details}</p>
+                <p className={styles.location}>{achievement.location}</p>
+              </div>
             </article>
           ))}
         </div>

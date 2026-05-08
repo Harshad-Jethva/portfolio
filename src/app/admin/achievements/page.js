@@ -71,7 +71,10 @@ export default function AdminAchievementsPage() {
         body: formData,
       });
 
-      if (!response.ok) throw new Error("Upload failed.");
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || errorData.details || "Upload failed.");
+      }
 
       const data = await response.json();
       setForm((current) => ({
@@ -202,18 +205,39 @@ export default function AdminAchievementsPage() {
           </div>
           <div className="admin-input-group" style={{ gridColumn: 'span 2' }}>
             <label>Achievement Image</label>
-            <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
-              <div style={{ position: 'relative', flex: 1 }}>
-                <Globe size={14} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} />
-                <input value={form.imageUrl} onChange={handleChange("imageUrl")} placeholder="Image URL (Drive/Web)" className="admin-input" style={{ paddingLeft: '2.5rem' }} required />
+            <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+              <div 
+                onClick={handleFileBrowse}
+                style={{ 
+                  flex: 1, 
+                  height: '44px', 
+                  border: '2px dashed #e2e8f0', 
+                  borderRadius: '12px', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  padding: '0 1rem', 
+                  cursor: 'pointer',
+                  background: '#f8fafc',
+                  transition: 'border-color 0.2s'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.borderColor = '#94a3b8'}
+                onMouseOut={(e) => e.currentTarget.style.borderColor = '#e2e8f0'}
+              >
+                <ImageIcon size={18} style={{ color: '#94a3b8', marginRight: '0.75rem' }} />
+                <span style={{ color: form.imageUrl ? '#1e293b' : '#94a3b8', fontSize: '0.875rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  {uploading ? "Uploading image..." : form.imageUrl ? "Image selected successfully" : "Click to upload achievement image"}
+                </span>
+                {form.imageUrl && <div style={{ marginLeft: 'auto', width: '8px', height: '8px', borderRadius: '50%', background: '#10b981' }} />}
               </div>
               <input type="file" ref={fileInputRef} onChange={handleFileChange} style={{ display: 'none' }} accept="image/*" />
-              <button type="button" onClick={handleFileBrowse} disabled={uploading} className="btn-premium" style={{ height: '44px', background: '#f8fafc', color: '#475569', border: '1px solid #e2e8f0', whiteSpace: 'nowrap' }}>
+              <button type="button" onClick={handleFileBrowse} disabled={uploading} className="btn-premium" style={{ height: '44px', whiteSpace: 'nowrap' }}>
                 <Upload size={16} />
-                {uploading ? "..." : "Local"}
+                {uploading ? "..." : "Browse"}
               </button>
             </div>
+            <input type="hidden" value={form.imageUrl} required />
           </div>
+
           <div className="admin-input-group" style={{ gridColumn: 'span 2' }}>
             <label>Location</label>
             <div style={{ position: 'relative' }}>
@@ -276,7 +300,10 @@ export default function AdminAchievementsPage() {
                   <td>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                       <div style={{ width: '32px', height: '32px', borderRadius: '8px', overflow: 'hidden', background: '#f1f5f9' }}>
-                        <img src={achievement.imageUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={(e) => { e.target.src = 'https://via.placeholder.com/32?text=A' }} />
+                        <img src={achievement.imageUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} onError={(e) => { 
+                          e.target.onerror = null;
+                          e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(achievement.title)}&background=f1f5f9&color=475569`;
+                        }} />
                       </div>
                       <div>
                         <span style={{ fontWeight: '600', color: '#1e293b', display: 'block' }}>{achievement.title}</span>

@@ -60,6 +60,17 @@ const SCHEMA_STATEMENTS = [
       updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
     );
   `,
+  `
+    CREATE TABLE IF NOT EXISTS media_assets (
+      id SERIAL PRIMARY KEY,
+      file_name TEXT NOT NULL,
+      public_url TEXT NOT NULL,
+      file_type TEXT,
+      file_size INTEGER,
+      content TEXT,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    );
+  `,
 ];
 
 const toInteger = (value, fallback = 0) => {
@@ -504,3 +515,18 @@ export async function findUserByUsername(username) {
   );
   return result.rows[0] || null;
 }
+
+export async function trackMediaAsset(data) {
+  await ensurePortfolioSchema();
+  const result = await query(
+    `
+      INSERT INTO media_assets (file_name, public_url, file_type, file_size, content)
+      VALUES ($1, $2, $3, $4, $5)
+      RETURNING id, file_name, public_url;
+    `,
+    [data.fileName, data.publicUrl, data.fileType, data.fileSize, data.content]
+  );
+  return result.rows[0];
+}
+
+

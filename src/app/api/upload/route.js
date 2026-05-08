@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@/utils/supabase/server";
-import { cookies } from "next/headers";
+import { trackMediaAsset } from "@/lib/portfolioRepository";
 
 export async function POST(request) {
   try {
@@ -11,39 +10,50 @@ export async function POST(request) {
       return NextResponse.json({ error: "No file uploaded" }, { status: 400 });
     }
 
-    const cookieStore = await cookies();
-    const supabase = createClient(cookieStore);
-
+    // Convert file to Buffer then to Base64
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
-
-    // Create a unique filename
-    const timestamp = Date.now();
-    const originalName = file.name.replace(/\s+/g, "-");
-    const filename = `${timestamp}-${originalName}`;
     
-    // Upload to Supabase Storage bucket 'portfolio'
-    const { data: uploadData, error: uploadError } = await supabase.storage
-      .from("portfolio")
-      .upload(filename, buffer, {
-        contentType: file.type,
-        upsert: true
-      });
+    // Create a Data URL (e.g., data:image/png;base64,...)
+    const base64Data = buffer.toString("base64");
+    const dataUrl = `data:${file.type};base64,${base64Data}`;
 
-    if (uploadError) {
-      console.error("Supabase storage error:", uploadError);
-      return NextResponse.json({ error: "Upload to Supabase failed" }, { status: 500 });
+    // Sanitize filename
+    const timestamp = Date.now();
+    const extension = file.name.split('.').pop();
+    const originalName = file.name
+      .split('.')
+      .slice(0, -1)
+      .join('.')
+      .replace(/[^a-zA-Z0-9]/g, "-")
+      .toLowerCase();
+    
+    const filename = `${timestamp}-${originalName}.${extension}`;
+
+    // Store the image content directly in the database
+    try {
+      await trackMediaAsset({
+        fileName: filename,
+        publicUrl: dataUrl, // The Data URL is the "public url" now
+        fileType: file.type,
+        fileSize: file.size,
+        content: base64Data
+      });
+    } catch (dbError) {
+      console.error("Failed to store media in database:", dbError);
+      return NextResponse.json({ 
+        error: "Database storage failed: " + dbError.message 
+      }, { status: 500 });
     }
 
-    // Get the public URL
-    const { data: { publicUrl } } = supabase.storage
-      .from("portfolio")
-      .getPublicUrl(filename);
-
-    return NextResponse.json({ url: publicUrl });
+    // Return the Data URL to be used as the image source
+    return NextResponse.json({ url: dataUrl });
   } catch (error) {
-    console.error("Upload error:", error);
-    return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    console.error("Upload route error:", error);
+    return NextResponse.json({ error: "Internal Server Error: " + error.message }, { status: 500 });
   }
 }
+
+
+
 
