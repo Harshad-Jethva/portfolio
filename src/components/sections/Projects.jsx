@@ -4,9 +4,10 @@ import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { DEFAULT_PROJECTS } from "@/lib/portfolioData";
+import ProjectModal from "@/components/common/ProjectModal";
 import styles from "./Projects.module.css";
 
-function ProjectRow({ project }) {
+function ProjectRow({ project, onOpen }) {
   const rowRef = useRef(null);
   const imgRef = useRef(null);
   const [hovered, setHovered] = useState(false);
@@ -45,7 +46,7 @@ function ProjectRow({ project }) {
 
   return (
     <article ref={rowRef} className={styles.row} onMouseEnter={onEnter} onMouseLeave={onLeave}>
-      <div className={styles.imgWrap}>
+      <div className={`${styles.imgWrap} cursor-view`} onClick={() => onOpen(project)}>
         <div ref={imgRef} className={styles.imgBg}>
           {project.imageUrl && (
             <img 
@@ -90,7 +91,9 @@ function ProjectRow({ project }) {
           </a>
         </div>
 
-        <h3 className={styles.title}>{project.title}</h3>
+        <h3 className={`interactive ${styles.title}`} onClick={() => onOpen(project)} style={{ cursor: 'pointer' }}>
+          {project.title}
+        </h3>
         <p className={styles.tech}>{project.tech}</p>
         <p className={styles.desc}>{project.desc}</p>
       </div>
@@ -102,6 +105,7 @@ export default function Projects() {
   const sectionRef = useRef(null);
   const headRef = useRef(null);
   const [projects, setProjects] = useState(DEFAULT_PROJECTS);
+  const [activeProject, setActiveProject] = useState(null);
 
   useEffect(() => {
     let mounted = true;
@@ -156,11 +160,21 @@ export default function Projects() {
 
         <div className={styles.list}>
           {projects.map((project) => (
-            <ProjectRow key={project.id ?? `${project.index}-${project.title}`} project={project} />
+            <ProjectRow 
+              key={project.id ?? `${project.index}-${project.title}`} 
+              project={project} 
+              onOpen={setActiveProject}
+            />
           ))}
         </div>
       </div>
+
+      <ProjectModal 
+        project={activeProject} 
+        onClose={() => setActiveProject(null)} 
+      />
     </section>
   );
 }
+
 
