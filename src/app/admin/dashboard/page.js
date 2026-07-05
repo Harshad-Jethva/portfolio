@@ -124,7 +124,7 @@ export default function DashboardPage() {
                 <div key={message.id} className="message-item">
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                      <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#f1f5f9', display: 'flex', alignItems: 'center', justifyCenter: 'center', fontSize: '0.75rem', fontWeight: '700', color: '#64748b' }}>
+                      <div style={{ width: '32px', height: '32px', borderRadius: '50%', background: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.75rem', fontWeight: '700', color: '#64748b' }}>
                         {message.name.charAt(0).toUpperCase()}
                       </div>
                       <span style={{ fontWeight: '600', color: '#1e293b' }}>{message.name}</span>

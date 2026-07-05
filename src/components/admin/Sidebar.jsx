@@ -9,10 +9,18 @@ import {
   Mail,
   Trophy,
   LogOut,
+  Layers,
+  Image,
+  Menu,
+  Palette,
 } from "lucide-react";
 
 const navItems = [
   { name: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
+  { name: "Page Builder", href: "/admin/builder", icon: Layers },
+  { name: "Media Manager", href: "/admin/media", icon: Image },
+  { name: "Menus Builder", href: "/admin/menus", icon: Menu },
+  { name: "Theme Settings", href: "/admin/theme", icon: Palette },
   { name: "Projects", href: "/admin/projects", icon: FolderKanban },
   { name: "Skills", href: "/admin/skills", icon: Code2 },
   { name: "Achievements", href: "/admin/achievements", icon: Trophy },

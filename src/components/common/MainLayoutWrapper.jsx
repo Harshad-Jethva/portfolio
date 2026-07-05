@@ -5,27 +5,33 @@ import SmoothScroll from "./SmoothScroll";
 import CustomCursor from "./CustomCursor";
 import Background3D from "../ui/Background3D";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 export default function MainLayoutWrapper({ children }) {
   const pathname = usePathname();
 
-  // If we're on the admin dashboard or login page, don't show the main site components
+  const isAdminOrLogin = (pathname?.startsWith("/admin") || pathname?.startsWith("/login")) && !pathname?.startsWith("/admin/builder/preview");
+
   return (
     <>
       <CustomCursor />
       <div className="grain-overlay" />
-      {!(pathname?.startsWith("/admin") || pathname?.startsWith("/login")) && (
+      {!isAdminOrLogin && (
         <>
           <Navbar />
           <Background3D />
         </>
       )}
-      {pathname?.startsWith("/admin") || pathname?.startsWith("/login") ? (
+      {isAdminOrLogin ? (
         children
       ) : (
-        <SmoothScroll>{children}</SmoothScroll>
+        <SmoothScroll>
+          {children}
+          <Footer />
+        </SmoothScroll>
       )}
     </>
   );
 }
+
 

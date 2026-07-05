@@ -21,8 +21,8 @@ function fitCover(plane, texture, width, height) {
 
 export default function HeroImageReveal({
   className,
-  mainImage = "/assets/hero-photo-main.png",
-  secondImage = "/assets/hero-photo-second.png",
+  mainImage = "/assets/Harshad_image_1.webp",
+  secondImage = "/assets/Harshad_image_2.webp",
   interactionRef,
 }) {
   const canvasRef = useRef(null);

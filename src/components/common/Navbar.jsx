@@ -1,14 +1,16 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import styles from "./Navbar.module.css";
 
 const navLinks = [
-  { label: "Skills",   href: "#skills"   },
-  { label: "Awards",   href: "#awards"   },
-  { label: "Projects", href: "#projects" },
-  { label: "Contact",  href: "#contact"  },
+  { label: "Home",     href: "/"         },
+  { label: "About",    href: "/about"    },
+  { label: "Skills",   href: "/skills"   },
+  { label: "Projects", href: "/projects" },
+  { label: "Contact",  href: "/contact"  },
 ];
 
 const socialLinks = [
@@ -19,6 +21,7 @@ const socialLinks = [
 export default function Navbar() {
   const navRef  = useRef(null);
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -26,32 +29,27 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Smooth anchor click
-  const handleClick = (e, href) => {
-    e.preventDefault();
-    const el = document.querySelector(href);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <nav ref={navRef} className={`${styles.nav} ${scrolled ? styles.scrolled : ""}`}>
       {/* Left — page links */}
       <ul className={styles.links}>
-        {navLinks.map(({ label, href }) => (
-          <li key={href}>
-            <a
-              href={href}
-              className={`interactive ${styles.link}`}
-              onClick={(e) => handleClick(e, href)}
-            >
-              <span>{label}</span>
-            </a>
-          </li>
-        ))}
+        {navLinks.map(({ label, href }) => {
+          const isActive = pathname === href;
+          return (
+            <li key={href}>
+              <Link
+                href={href}
+                className={`interactive ${styles.link} ${isActive ? styles.active : ""}`}
+              >
+                <span>{label}</span>
+              </Link>
+            </li>
+          );
+        })}
       </ul>
 
       {/* Center — logo */}
-      <div className={styles.logo}>HJ</div>
+      <Link href="/" className={styles.logo}>HJ</Link>
 
       {/* Right — socials */}
       <ul className={`${styles.links} ${styles.right}`}>
@@ -71,3 +69,4 @@ export default function Navbar() {
     </nav>
   );
 }
+

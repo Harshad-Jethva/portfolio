@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
@@ -24,7 +24,6 @@ export default function Contact() {
   const formRef = useRef(null);
   const fieldsRef = useRef([]);
   const linksRef = useRef([]);
-  const footRef = useRef(null);
 
   const [status, setStatus] = useState("idle");
   const [errorText, setErrorText] = useState("");
@@ -62,8 +61,7 @@ export default function Contact() {
         { opacity: 0, y: 20 },
         { opacity: 1, y: 0, stagger: 0.1, duration: 0.7, ease: "power3.out" },
         "-=0.4"
-      )
-      .fromTo(footRef.current, { opacity: 0 }, { opacity: 1, duration: 0.6 }, "-=0.2");
+      );
 
     return () => {
       timeline.kill();
@@ -152,6 +150,38 @@ export default function Contact() {
                   </svg>
                 </a>
               ))}
+            </div>
+
+            <div style={{ marginTop: "2.5rem" }}>
+              <a
+                href="/harshad-jethva-cv.pdf"
+                download="Harshad_Jethva_CV.pdf"
+                className="interactive"
+                style={{
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "0.8rem",
+                  background: "#f2ede5",
+                  color: "#0c0c0c",
+                  padding: "0.9rem 2.2rem",
+                  borderRadius: "2rem",
+                  fontWeight: "600",
+                  fontSize: "0.85rem",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
+                  textDecoration: "none",
+                  transition: "transform 0.3s ease"
+                }}
+                onMouseEnter={(e) => e.currentTarget.style.transform = "scale(1.05)"}
+                onMouseLeave={(e) => e.currentTarget.style.transform = "scale(1)"}
+              >
+                <span>Download CV</span>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+              </a>
             </div>
           </div>
 
@@ -269,12 +299,8 @@ export default function Contact() {
           </div>
         </div>
       </div>
-
-      <footer ref={footRef} className={styles.footer}>
-        <span>© {new Date().getFullYear()} Harshad Jethva</span>
-        <span>Creative Developer - India</span>
-      </footer>
     </section>
   );
 }
+
 

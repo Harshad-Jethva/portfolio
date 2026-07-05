@@ -16,6 +16,8 @@ export default function SmoothScroll({ children }) {
       touchMultiplier: 1.8,
     });
 
+    window.lenis = lenis;
+
     // Keep ScrollTrigger in sync with Lenis
     lenis.on("scroll", ScrollTrigger.update);
 
@@ -27,6 +29,7 @@ export default function SmoothScroll({ children }) {
 
     return () => {
       lenis.destroy();
+      window.lenis = null;
     };
   }, []);
 

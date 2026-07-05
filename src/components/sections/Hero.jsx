@@ -123,8 +123,8 @@ export default function Hero({ isLoaded }) {
       <div ref={bgRef} className={styles.bgWrap}>
         <HeroImageReveal
           className={styles.bgCanvas}
-          mainImage="/assets/hero-photo-main.png"
-          secondImage="/assets/hero-photo-second.png"
+          mainImage="/assets/Harshad_image_1.webp"
+          secondImage="/assets/Harshad_image_2.webp"
           interactionRef={containerRef}
         />
       </div>
@@ -132,17 +132,20 @@ export default function Hero({ isLoaded }) {
       {/* Dark gradient overlay */}
       <div className={styles.overlay} />
 
-      {/* Name: JETHVA — top left bleed */}
+      {/* Screen-reader only H1 for SEO, GEO, and AEO */}
+      <h1 className={styles.srOnly}>Harshad Jethva - Visual Designer &amp; Creative Developer</h1>
+
+      {/* Name: HARSHAD — top left bleed */}
       <div className={styles.nameLeft}>
         <div className={styles.overflow}>
-          <h1 ref={name1Ref} className={styles.nameText}>Harshad</h1>
+          <div ref={name1Ref} className={styles.nameText}>Harshad</div>
         </div>
       </div>
 
-      {/* Name: HARSHAD — bottom right */}
+      {/* Name: JETHVA — bottom right */}
       <div className={styles.nameRight}>
         <div className={styles.overflow}>
-          <h1 ref={name2Ref} className={`${styles.nameText} ${styles.nameItalic}`}>Jethva</h1>
+          <div ref={name2Ref} className={`${styles.nameText} ${styles.nameItalic}`}>Jethva</div>
         </div>
       </div>
 

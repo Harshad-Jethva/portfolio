@@ -1,11 +1,17 @@
+"use client";
+
 import "@/styles/admin.css";
 import Sidebar from "@/components/admin/Sidebar";
-
-export const metadata = {
-  title: "Admin Dashboard | Portfolio",
-};
+import { usePathname } from "next/navigation";
 
 export default function AdminLayout({ children }) {
+  const pathname = usePathname();
+  const isPreview = pathname === "/admin/builder/preview";
+
+  if (isPreview) {
+    return <>{children}</>;
+  }
+
   return (
     <div className="admin-layout">
       <Sidebar />

@@ -11,6 +11,7 @@ export default function About() {
   const headRef    = useRef(null);
   const paraRef    = useRef(null);
   const statsRef   = useRef([]);
+  const numRefs    = useRef([]);
 
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -40,7 +41,30 @@ export default function About() {
       { y: 20, opacity: 0 },
       { y: 0,  opacity: 1, stagger: 0.1, duration: 0.8, ease: "power3.out" },
       "-=0.5"
-    );
+    )
+    .call(() => {
+      statsRef.current.forEach((statEl, idx) => {
+        const numEl = numRefs.current[idx];
+        if (!numEl) return;
+        const targetVal = idx === 0 ? 4 : idx === 1 ? 15 : null;
+        if (targetVal !== null) {
+          const obj = { val: 0 };
+          gsap.to(obj, {
+            val: targetVal,
+            duration: 1.8,
+            ease: "power3.out",
+            onUpdate: () => {
+              numEl.textContent = Math.floor(obj.val) + "+";
+            }
+          });
+        } else {
+          gsap.fromTo(numEl,
+            { scale: 0.2, opacity: 0.3, rotate: -90 },
+            { scale: 1, opacity: 1, rotate: 0, duration: 1.4, ease: "back.out(2)" }
+          );
+        }
+      });
+    });
   }, []);
 
   return (
@@ -80,7 +104,7 @@ export default function About() {
               { num: "∞",   label: "Cups of tea" },
             ].map((s, i) => (
               <div key={i} className={styles.stat} ref={el => statsRef.current[i] = el}>
-                <span className={styles.statNum}>{s.num}</span>
+                <span className={styles.statNum} ref={el => numRefs.current[i] = el}>{s.num}</span>
                 <span className={styles.statLabel}>{s.label}</span>
               </div>
             ))}

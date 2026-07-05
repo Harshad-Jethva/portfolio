@@ -13,6 +13,9 @@ const createPool = () => {
   return new Pool({
     connectionString: process.env.DATABASE_URL,
     ssl: process.env.POSTGRES_SSL === "true" ? { rejectUnauthorized: false } : undefined,
+    max: 5,
+    idleTimeoutMillis: 1000,
+    connectionTimeoutMillis: 5000,
   });
 };
 

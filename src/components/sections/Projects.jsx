@@ -27,8 +27,29 @@ function ProjectRow({ project, onOpen }) {
       }
     );
 
+    // Parallax scroll effect on project images
+    const imgEl = imgRef.current?.querySelector("img");
+    let parallax;
+    if (imgEl) {
+      parallax = gsap.fromTo(
+        imgEl,
+        { y: "-10%" },
+        {
+          y: "10%",
+          ease: "none",
+          scrollTrigger: {
+            trigger: rowRef.current,
+            start: "top bottom",
+            end: "bottom top",
+            scrub: true,
+          },
+        }
+      );
+    }
+
     return () => {
       animation.kill();
+      if (parallax) parallax.kill();
     };
   }, []);
 

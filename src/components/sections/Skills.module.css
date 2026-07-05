@@ -5,7 +5,6 @@
 .skills {
   background: #eae7e1;
   color: #0c0c0c;
-  min-height: 100vh;
   display: flex;
   align-items: center;
   position: relative;
@@ -14,7 +13,7 @@
 }
 
 .inner {
-  padding: 7rem 5.5vw 8rem;
+  padding: 4rem 5.5vw;
   width: 100%;
 }
 
@@ -58,7 +57,7 @@
   color: rgba(12, 12, 12, 0.38);
   font-weight: 500;
   margin-top: 1.5rem;
-  margin-bottom: 5.5rem;
+  margin-bottom: 3rem;
 }
 
 /* ── Grid ────────────────────────────────────────────────────── */

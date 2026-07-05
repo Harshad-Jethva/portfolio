@@ -28,7 +28,7 @@ export async function POST(request) {
 
     // Create the session
     const expires = new Date(Date.now() + 2 * 60 * 60 * 1000); // 2 hours
-    const session = await encrypt({ user: { id: user.id, username: user.username }, expires });
+    const session = await encrypt({ user: { id: user.id, username: user.username, role: user.role || 'Admin' }, expires });
 
     // Save the session in a cookie
     const cookieStore = await cookies();

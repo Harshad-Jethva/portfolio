@@ -13,6 +13,10 @@ export async function GET() {
         skills: 0,
         achievements: 0,
         messages: 0,
+        totalPages: 0,
+        publishedPages: 0,
+        draftPages: 0,
+        totalWidgets: 0,
         error: error.message,
       },
       { status: 500 }

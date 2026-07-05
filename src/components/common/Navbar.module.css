@@ -63,11 +63,13 @@
   transition: transform 0.42s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
-.link:hover {
+.link:hover,
+.link.active {
   color: rgba(242, 237, 229, 0.95);
 }
 
-.link:hover::after {
+.link:hover::after,
+.link.active::after {
   transform: scaleX(1);
   transform-origin: left;
 }
@@ -82,8 +84,8 @@
   letter-spacing: 0.18em;
   color: rgba(242, 237, 229, 0.9);
   text-transform: uppercase;
-  pointer-events: none;
   user-select: none;
+  text-decoration: none;
 }
 
 /* ── Responsive ──────────────────────────────────────────────── */
